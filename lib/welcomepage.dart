@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_demo_app/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,17 @@ class MyWelcomePage extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWelcomePage> {
+  File? _image;
+  Future getImage(ImageSource source) async {
+    final image = await ImagePicker().pickImage(source: source);
+    if (image == null) return;
+    final imageTemporary = File(image.path);
+
+    setState(() {
+      this._image = imageTemporary;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,25 +37,32 @@ class _MyWidgetState extends State<MyWelcomePage> {
           child: Column(
         children: [
           const Padding(padding: EdgeInsets.all(25)),
-          const Image(
-              image: AssetImage(
-            'assets/Wall-e image picker.jpg',
-          )),
-          CustomButton(
+          _image != null
+              ? Image.file(
+                  _image!,
+                  width: 250,
+                  height: 250,
+                  fit: BoxFit.fill,
+                )
+              : const Image(
+                  image: AssetImage(
+                  'assets/Wall-e image picker.jpg',
+                )),
+          customButton(
               title: 'Pick from Gallery',
               icon: Icons.image_outlined,
-              onClick: () => {}),
-          CustomButton(
+              onClick: () => getImage(ImageSource.gallery)),
+          customButton(
               title: 'Open Camera',
               icon: Icons.camera_alt_rounded,
-              onClick: () => {})
+              onClick: () => getImage(ImageSource.camera))
         ],
       )),
     );
   }
 }
 
-Widget CustomButton(
+Widget customButton(
     {required String title,
     required IconData icon,
     required VoidCallback onClick}) {
