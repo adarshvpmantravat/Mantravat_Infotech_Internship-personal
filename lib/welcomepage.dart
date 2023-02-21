@@ -26,6 +26,9 @@ class _MyWidgetState extends State<MyWelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // leading: const Icon(
+        //   Icons.account_circle_rounded,
+        // ),
         backgroundColor: Colors.purple,
         title: const Text(
           'Welcome to Mantravat Infotech',

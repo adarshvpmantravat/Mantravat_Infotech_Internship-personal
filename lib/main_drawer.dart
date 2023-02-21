@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_demo_app/welcomepage.dart';
 
@@ -68,15 +71,24 @@ class MainDrawer extends StatelessWidget {
             onTap: null,
           ),
           const ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text(
-              'Exit',
-              style: TextStyle(fontSize: 18),
-            ),
-            onTap: null,
-          ),
+              leading: Icon(Icons.exit_to_app),
+              title: Text(
+                'Exit',
+                style: TextStyle(fontSize: 18),
+              ),
+              onTap: null //exitApp(),
+              ),
         ],
       ),
     );
   }
+
+//   void exitApp() {
+//     if (Platform.isAndroid) {
+//       SystemNavigator.pop();
+//     } else {
+//       exit(0);
+//     }
+//   }
+// }
 }
