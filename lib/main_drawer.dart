@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:my_demo_app/welcomepage.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -16,7 +14,7 @@ class MainDrawer extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(30),
-            color: Theme.of(context).primaryColor,
+            color: Colors.purple,
             child: Center(
               child: Column(
                 children: <Widget>[

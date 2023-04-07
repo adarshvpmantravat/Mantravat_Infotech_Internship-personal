@@ -3,40 +3,42 @@ import 'package:my_demo_app/main_drawer.dart';
 import 'package:my_demo_app/login.dart';
 import 'package:my_demo_app/register.dart';
 import 'package:my_demo_app/welcomepage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      initialRoute: 'login',
-      routes: {
-        'login': (context) => const MyLoginPage(),
-        'register': (context) => const MyRegisterPage(),
-        'welcomepage': (context) => const MyWelcomePage()
-      },
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-          title: const Text(
-            'Welcome to Mantravat Infotech',
-            style: TextStyle(fontSize: 25),
-          ),
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-        drawer: const MainDrawer(),
-        body: Center(
-          // child:  Container(
-          //   child:  Text('Body'),
-          //   color: Colors.blue,
-          //   padding: EdgeInsets.all(25),
-          child: TextButton(
-            child: const Text('Click Here to Login'),
-            onPressed: () {
-              // Navigator.pushNamed(context, 'login');
-            },
-            onLongPress: () {},
-          ),
-        ),
-      ),
-    ),
-  );
+        home: Scaffold(
+          body: FutureBuilder(
+              future: _initialization,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('could not connected'),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return const MyLoginPage();
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }),
+        ));
+  }
 }

@@ -18,7 +18,7 @@ class _MyWidgetState extends State<MyWelcomePage> {
     final imageTemporary = File(image.path);
 
     setState(() {
-      this._image = imageTemporary;
+      _image = imageTemporary;
     });
   }
 
